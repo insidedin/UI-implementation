@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tugas2_gpa38/pages/home.dart';
 import 'package:tugas2_gpa38/register.dart';
+import 'package:tugas2_gpa38/widgets/navigation.dart';
 import 'package:tugas2_gpa38/widgets/widget.dart';
 
 class Login extends StatefulWidget {
@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => Home()));
+                        MaterialPageRoute(builder: (context) =>Navigation()));
                   },
                   child: textView(EdgeInsets.all(0), 'LOGIN', TextAlign.center,
                       Colors.white, FontWeight.w400, 16),
