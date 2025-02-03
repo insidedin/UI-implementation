@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context)=> SplashScreen(),
-        '/login': (context)=> Login(),
-        '/register': (context)=> Register(),
-        '/navigation': (context)=> Navigation(),
-        '/home': (context)=> Home(),
+        '/': (context)=> Navigation(),
+        // '/login': (context)=> Login(),
+        // '/register': (context)=> Register(),
+        // '/navigation': (context)=> Navigation(),
+        // '/home': (context)=> Home(),
       },
     );
   }

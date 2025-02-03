@@ -28,6 +28,8 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 20),
+
+              // list gambar depan
               CarouselSlider(
                 options: CarouselOptions(
                   height: 250,
@@ -58,6 +60,17 @@ class _HomeState extends State<Home> {
                   );
                 }).toList(),
               ),
+
+              // list menu course
+              textView(
+                    EdgeInsets.only(top: 20, left: 10),
+                    'Akademik',
+                    TextAlign.left,
+                    Colors.black,
+                    FontWeight.w500,
+                    16,
+                  ),
+              
             ],
           ),
         ),
