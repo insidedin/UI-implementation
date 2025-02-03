@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tugas2_gpa38/pages/home.dart';
-import 'package:tugas2_gpa38/login.dart';
-import 'package:tugas2_gpa38/register.dart';
-import 'package:tugas2_gpa38/splashscreen.dart';
+import 'package:tugas2_gpa38/dailyruby/dailyhome.dart';
+import 'package:tugas2_gpa38/flyaway/flyhome.dart';
+import 'package:tugas2_gpa38/mechanic/carehome.dart';
 import 'package:tugas2_gpa38/widgets/navigation.dart';
 
 void main() {
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context)=> Navigation(),
+        '/': (context)=> FlyHome(),
         // '/login': (context)=> Login(),
         // '/register': (context)=> Register(),
         // '/navigation': (context)=> Navigation(),
