@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugas2_gpa38/login.dart';
 import 'package:tugas2_gpa38/widgets/widget.dart';
@@ -10,94 +11,133 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final TextEditingController EmailController = TextEditingController();
-  final TextEditingController UsernameController = TextEditingController();
-  final TextEditingController PasswordController = TextEditingController();
+  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  // Fungsi register
+  void register() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Wajib Diisi Semua!')),
+      );
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (userCredential.user != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => Login()),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
+      if (e.code == 'password-lemah') {
+        errorMessage = 'Password terlalu lemah.';
+      } else if (e.code == 'email-sudah-terdaftar') {
+        errorMessage = 'Akun dengan email tersebut sudah terdaftar.';
+      } else if (e.code == 'email-tidak-valid') {
+        errorMessage = 'Alamat email tidak valid.';
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi kesalahan yang tidak terduga. Silakan coba lagi.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Image.asset(
-                    'assets/logo-bg.png',
-                    height: 150,
-                  ),
+                child: Image.asset(
+                  'assets/logo-bg.png',
+                  height: 150,
                 ),
               ),
               SizedBox(height: 40),
               Center(
                 child: textView(
-                    EdgeInsets.only(top: 20, left: 30),
-                    'REGISTER AKUN E-LEARNING PALCOMTECH',
-                    TextAlign.center,
-                    Colors.black,
-                    FontWeight.w500,
-                    16),
+                  EdgeInsets.all(0),
+                  'Daftar Akun E-Learning Palcomtech',
+                  TextAlign.center,
+                  Colors.black,
+                  FontWeight.w500,
+                  16,
+                ),
               ),
               SizedBox(height: 30),
-              inputController(
-                  UsernameController, Icon(Icons.email_rounded), 'Email'),
-              SizedBox(height: 20),
-              inputController(
-                  UsernameController, Icon(Icons.person_2_rounded), 'Username'),
-              SizedBox(height: 20),
-              inputController(PasswordController, Icon(Icons.lock), 'Password'),
-              SizedBox(height: 40),
+              inputController(emailController, Icon(Icons.email), 'Email'),
+              SizedBox(height: 25),
+              inputController(usernameController, Icon(Icons.person), 'Username'),
+              SizedBox(height: 25),
+              inputController(passwordController, Icon(Icons.lock), 'Password'),
+              SizedBox(height: 30),
+              // Tombol register
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => Login()));
-                  },
-                  child: textView(EdgeInsets.all(0), 'REGISTER', TextAlign.center,
-                      Colors.white, FontWeight.w400, 16),
+                  onPressed: register,
+                  child: textView(
+                    EdgeInsets.all(0),
+                    'REGISTER',
+                    TextAlign.center,
+                    Colors.white,
+                    FontWeight.w500,
+                    16,
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 1, 20, 54),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 100, vertical: 20), // Padding tombol
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Radius tombol
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                   ),
                 ),
               ),
               SizedBox(height: 30),
+              // Teks belum punya akun
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   textView(
-                    EdgeInsets.only(top: 20),
+                    EdgeInsets.all(0),
                     'Sudah Punya Akun?',
                     TextAlign.center,
                     Colors.black,
                     FontWeight.w500,
-                    16,
+                    15,
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 9),
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => Login()));
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
                     },
                     child: textView(
-                      EdgeInsets.only(top: 20),
-                      'Login Disini',
+                      EdgeInsets.all(0),
+                      'Login disini',
                       TextAlign.center,
-                      Color.fromARGB(255, 7, 64, 161),
-                      FontWeight.w500,
-                      16,
+                      const Color.fromARGB(255, 33, 5, 83),
+                      FontWeight.bold,
+                      15,
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

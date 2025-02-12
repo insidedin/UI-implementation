@@ -19,23 +19,6 @@ class _DailyHomeState extends State<DailyHome> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'AlphaSkin',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Icon(Icons.menu, color: Colors.black),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
                 // Search Bar
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -166,28 +149,6 @@ class _DailyHomeState extends State<DailyHome> {
             ),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.pink),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.new_releases, color: Colors.pink),
-            label: 'New Product',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications, color: Colors.pink),
-            label: 'Notification',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.pink),
-            label: 'Profile',
-          ),
-        ],
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.pinkAccent,
       ),
     );
   }
