@@ -1,16 +1,38 @@
-# tugas2_gpa38
+void login() async {
+  String email = emailController.text.trim();
+  String password = passwordController.text.trim();
 
-A new Flutter project.
+  if (email.isEmpty || password.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Wajib Diisi Semua!')),
+    );
+    return;
+  }
 
-## Getting Started
+  try {
+    // Query ke Firestore untuk mencari pengguna dengan email dan password yang cocok
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .where('password', isEqualTo: password)
+        .get();
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    if (result.docs.isNotEmpty) {
+      // Login berhasil
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login Berhasil!')),
+      );
+      // Bisa navigate ke home atau simpan status login
+    } else {
+      // Tidak ditemukan pengguna dengan email dan password tersebut
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Email atau Password salah')),
+      );
+    }
+  } catch (e) {
+    // Tangani error
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Terjadi kesalahan: $e')),
+    );
+  }
+}
